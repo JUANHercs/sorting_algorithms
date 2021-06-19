@@ -7,29 +7,28 @@
 *Return: Nothing
 */
 
-void _swap(listint_t **node, listint_t ** list)
+void _swap(listint_t **node, listint_t **list)
 {
-    listint_t *tmp = *node, *tmp2, *tmp3;
+listint_t *tmp = *node, *tmp2, *tmp3;
 
-    if(!(*node)->prev)
-        *list = (*node)->next;
+if (!(*node)->prev)
+*list = (*node)->next;
+tmp = tmp3 = *node;
+tmp2 = tmp->next;
 
-    tmp = tmp3 = *node;
-    tmp2 = tmp->next;
+tmp->next = tmp2->next;
+tmp3 = tmp->prev;
+tmp->prev = tmp2;
+tmp2->next = tmp;
+tmp2->prev = tmp3;
 
-    tmp->next = tmp2->next;
-    tmp3 = tmp->prev;
-    tmp->prev = tmp2;
-    tmp2->next = tmp;
-    tmp2->prev = tmp3;
+if (tmp2->prev)
+tmp2->prev->next = tmp2;
 
-    if (tmp2->prev)
-        tmp2->prev->next = tmp2;
+if (tmp->prev)
+tmp->next->prev = tmp;
 
-    if (tmp->prev)
-        tmp->next->prev = tmp;
-
-    *node = tmp2;
+*node = tmp2;
 }
 
 /**
@@ -40,36 +39,36 @@ void _swap(listint_t **node, listint_t ** list)
 */
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *head, *tback, *aux;
+listint_t *head, *tback, *aux;
 
-    if (!list || !(*list) || (!((*list)->prev) && !((*list)->next)))
-        return;
-    
-    head = *list;
-    while (head && head->next)
-    {
-        if (head->n > head->next->n)
-        {
-            aux = head;
+if (!list || !(*list) || (!((*list)->prev) && !((*list)->next)))
+return;
+   
+head = *list;
+while (head && head->next)
+{
+if (head->n > head->next->n)
+{
+aux = head;
 
-            _swap(&aux, list);
-            print_list(*list);
-            head = aux;
-            tback = aux;
+_swap(&aux, list);
+print_list(*list);
+head = aux;
+tback = aux;
 
-            while (tback && tback->prev)
-            {
-                if(tback->n < tback->prev->n)
-                {
-                    aux = tback->prev;
+while (tback && tback->prev)
+{
+if (tback->n < tback->prev->n)
+{
+aux = tback->prev;
 
-                    _swap(&(aux), list);
-                    print_list(*list);
-                    tback = aux->next;
-                }
-                tback = tback->prev;
-            }
-        }   
-    }
-    head = head->next;
+_swap(&(aux), list);
+print_list(*list);
+tback = aux->next;
+}
+tback = tback->prev;
+}
+}  
+}
+head = head->next;
 }
